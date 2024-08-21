@@ -1,60 +1,37 @@
 import random
+
+def determine_winner(comp, you):
+    if comp == you:
+        return "It's a tie!"
     
-def gamewin(comp,you):
-    if comp==you:
-        return None
-        # print("Game Tie")
-    elif comp=='stone':
-        if you=='paper':
-            return True
-            # print("You win")
-        elif you=='scissor':
-            return False
-            # print("You Lose")
-    elif comp=='paper':
-        if you=='scissor':
-            return True
-            # print("You win")
-        elif you=='stone':
-            return False
-            # print("You Lose")
-    elif comp=='scissor':
-        if you=='stone':
-            return True
-            # print("You win")
-        elif you=='paper':
-            return False
-            # print("You Lose")
+    # Winning conditions for the player
+    if (comp == 'stone' and you == 'paper') or \
+       (comp == 'paper' and you == 'scissor') or \
+       (comp == 'scissor' and you == 'stone'):
+        return "You win!"
     
+    return "You lose!"
 
-a= random.randint(1,3)
-if a==1:
-    comp='stone'
-    # print(comp)
-elif a==2:
-    comp='paper'
-    # print(comp)
-elif a==3:
-    comp='scissor'
-    # print(comp)
+def get_choice_name(choice_number):
+    choices = {1: 'scissor', 2: 'paper', 3: 'stone'}
+    return choices.get(choice_number, None)
 
 
+comp_choice = random.choice(['stone', 'paper', 'scissor'])
 
-b=int(input("Enter 1 for scissor, 2 for paper or 3 for stone: "))
-print(f"computer chose {comp}")
-if b==1:
-    you='scissor'
-elif b==2:
-    you='paper'
-elif b==3:
-    you='stone'
-a=gamewin(comp,you)
-if a==None:
-    print("Game Tie")
-elif a==True:
-    print('You won')
-elif a==False:
-    print('You lose')
-            
 
-    
+try:
+    user_choice_number = int(input("Enter 1 for scissor, 2 for paper, or 3 for stone: "))
+    user_choice = get_choice_name(user_choice_number)
+
+    if not user_choice:
+        print("Invalid choice! Please enter 1, 2, or 3.")
+    else:
+        print(f"Computer chose: {comp_choice}")
+        print(f"You chose: {user_choice}")
+        
+        result = determine_winner(comp_choice, user_choice)
+        print(result)
+
+except ValueError:
+    print("Invalid input! Please enter a number (1, 2, or 3).")
